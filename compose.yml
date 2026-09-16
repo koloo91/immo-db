@@ -1,0 +1,59 @@
+# Fremddienste für ImmoDB AI.
+#
+# "restart: unless-stopped" ist Absicht: FlareSolverr stand hier schon einmal sieben Tage
+# unbemerkt still. Dienste, von denen Import und Suche abhängen, sollen von selbst wiederkommen.
+#
+# Nicht enthalten: geobasis-cli - das ist ein lokales Binary und wird separat
+# mit "geobasis serve" gestartet.
+
+services:
+  meilisearch:
+    image: getmeili/meilisearch:v1.53
+    container_name: immo-meilisearch
+    restart: unless-stopped
+    ports:
+      - "7700:7700"
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-immo-db-ai-local-dev-key}
+      MEILI_ENV: development
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meili_data:/meili_data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7700/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:8-alpine
+    container_name: immo-redis
+    restart: unless-stopped
+    ports:
+      # Bewusst 6380 nach außen: auf 6379 läuft bereits das Redis eines anderen
+      # Projekts (allmylittleapps_redis). Ohne eigenen Port landen die BullMQ-Jobs
+      # dieser App in dessen Datenbank.
+      - "6380:6379"
+    # BullMQ verlangt noeviction - sonst kann Redis laufende Jobs wegwerfen.
+    command: redis-server --appendonly yes --maxmemory-policy noeviction
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: immo-flaresolverr
+    restart: unless-stopped
+    ports:
+      - "8191:8191"
+    environment:
+      LOG_LEVEL: info
+      TZ: Europe/Berlin
+
+volumes:
+  meili_data:
+  redis_data:

@@ -1,0 +1,35 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Lokale Datenbank - enthält Maklerkontakte, Mail-Volltexte und Preisverläufe.
+# Das Schema liegt in server/database/schema.ts, die Datei wird beim Start angelegt.
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# Hochgeladene Dokumente (Exposés, Grundbuch-/Katasterauszüge).
+# Amtliche Auszüge sind teils weitergabebeschränkt und gehören nicht in die Versionierung.
+storage/uploads/*
+!storage/uploads/.gitkeep
