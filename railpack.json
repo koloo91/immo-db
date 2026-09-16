@@ -4,6 +4,6 @@
     "node": "26"
   },
   "deploy": {
-    "startCommand": "bunx drizzle-kit migrate && &&node .output/server/index.mjs"
+    "startCommand": "bunx drizzle-kit migrate && node .output/server/index.mjs"
   }
 }
