@@ -98,12 +98,12 @@
                     {{ formatBorisDiff(p.pricePerSqm, p.parcel.borisBodenrichtwert) }}
                   </span>
                 </div>
-                <div v-else class="text-base-content/50 text-[11px]">
+                <div v-else class="text-base-content/50 text-xs">
                   {{ p.buildingLaw || 'Baurecht n.a.' }}
                 </div>
 
                 <!-- Broker icon if attached -->
-                <div v-if="p.broker?.name" class="flex items-center gap-1 text-[11px] text-base-content/70" :title="p.broker.name">
+                <div v-if="p.broker?.name" class="flex items-center gap-1 text-xs text-base-content/70" :title="p.broker.name">
                   <Icon name="lucide:user" class="w-3 h-3" />
                   <span class="truncate max-w-[80px]">{{ p.broker.name.split(' ')[0] }}</span>
                 </div>
@@ -122,7 +122,7 @@
                 <span v-else class="w-6"></span>
 
                 <select 
-                  class="select select-xs select-ghost font-normal text-[11px] h-6 min-h-0 focus:outline-none"
+                  class="select select-sm select-ghost font-normal text-xs h-6 min-h-0 focus:outline-none"
                   :value="p.status"
                   @change="onStatusSelect(p.id, $event)"
                 >
@@ -161,14 +161,14 @@ const emit = defineEmits<{
 }>()
 
 const columns = [
-  { id: 'new', title: 'Neu entdeckt', color: 'bg-info', prev: null, next: 'contacted', nextTitle: 'Makler kontaktiert' },
-  { id: 'contacted', title: 'Makler kontaktiert', color: 'bg-primary', prev: 'new', prevTitle: 'Neu', next: 'docs_requested', nextTitle: 'Unterlagen angefordert' },
-  { id: 'docs_requested', title: 'Unterlagen angefordert', color: 'bg-warning', prev: 'contacted', prevTitle: 'Kontaktiert', next: 'in_review', nextTitle: 'In Prüfung' },
-  { id: 'in_review', title: 'In Prüfung (B-Plan)', color: 'bg-accent', prev: 'docs_requested', prevTitle: 'Unterlagen', next: 'visiting', nextTitle: 'Besichtigung' },
-  { id: 'visiting', title: 'Besichtigung', color: 'bg-secondary', prev: 'in_review', prevTitle: 'In Prüfung', next: 'offer_made', nextTitle: 'Angebot' },
-  { id: 'offer_made', title: 'Angebot / Verhandlung', color: 'bg-warning', prev: 'visiting', prevTitle: 'Besichtigung', next: 'purchased', nextTitle: 'Gekauft' },
-  { id: 'purchased', title: 'Gekauft / Notar', color: 'bg-success', prev: 'offer_made', prevTitle: 'Angebot', next: null },
-  { id: 'rejected', title: 'Archiv / Absage', color: 'bg-neutral', prev: null, next: 'new', nextTitle: 'Reaktivieren' }
+  { id: 'new', title: 'Neu entdeckt', color: 'bg-base-content/25', prev: null, next: 'contacted' },
+  { id: 'contacted', title: 'Makler kontaktiert', color: 'bg-base-content/40', prev: 'new', next: 'docs_requested' },
+  { id: 'docs_requested', title: 'Unterlagen angefordert', color: 'bg-base-content/55', prev: 'contacted', next: 'in_review' },
+  { id: 'in_review', title: 'In Prüfung (B-Plan)', color: 'bg-primary/60', prev: 'docs_requested', next: 'visiting' },
+  { id: 'visiting', title: 'Besichtigung', color: 'bg-primary', prev: 'in_review', next: 'offer_made' },
+  { id: 'offer_made', title: 'Angebot / Verhandlung', color: 'bg-warning', prev: 'visiting', next: 'purchased' },
+  { id: 'purchased', title: 'Gekauft / Notar', color: 'bg-success', prev: 'offer_made', next: null },
+  { id: 'rejected', title: 'Archiv / Absage', color: 'bg-base-content/15', prev: null, next: null }
 ]
 
 function getPropertiesInCol(colId: string) {

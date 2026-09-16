@@ -94,7 +94,7 @@
 
           <!-- AI Inquiry Email Button -->
           <button 
-            class="btn btn-sm btn-accent gap-1.5"
+            class="btn btn-sm btn-primary gap-1.5"
             :disabled="generatingDraft"
             @click="generateEmailDraft"
           >
@@ -105,9 +105,9 @@
         </div>
 
         <!-- AI Draft Modal / Box if generated -->
-        <div v-if="emailDraft" class="bg-accent/10 border border-accent/30 rounded-xl p-4 space-y-3">
+        <div v-if="emailDraft" class="bg-primary/5 border border-primary/20 rounded-xl p-4 space-y-3">
           <div class="flex items-center justify-between">
-            <span class="font-bold text-xs text-accent flex items-center gap-1.5">
+            <span class="font-bold text-xs text-primary flex items-center gap-1.5">
               <Icon name="lucide:mail" class="w-4 h-4" />
               KI-Entwurf: E-Mail an Makler für fehlende Unterlagen
             </span>
@@ -121,7 +121,7 @@
             class="textarea textarea-bordered w-full font-mono text-xs bg-base-100"
           ></textarea>
           <div class="flex items-center justify-between">
-            <span class="text-[11px] text-base-content/60">
+            <span class="text-xs text-base-content/60">
               Kann vor dem Senden frei angepasst werden.
               <template v-if="draftOpenQuestions.length">
                 Enthält {{ draftOpenQuestions.length }} offene Frage(n) aus der KI-Gesamtanalyse.
@@ -155,7 +155,7 @@
                 />
                 <span>{{ item.title }}</span>
               </div>
-              <div v-if="item.notes" class="text-base-content/60 pl-6 text-[11px]">
+              <div v-if="item.notes" class="text-base-content/60 pl-6 text-xs">
                 {{ item.notes }}
               </div>
             </div>
@@ -193,10 +193,10 @@
             v-model="newChecklistTitle" 
             type="text" 
             placeholder="Weiteres Dokument / Nachweis hinzufügen..." 
-            class="input input-xs input-bordered flex-1"
+            class="input input-sm input-bordered flex-1"
             @keyup.enter="addChecklistItem"
           />
-          <button class="btn btn-xs btn-outline" :disabled="!newChecklistTitle.trim()" @click="addChecklistItem">
+          <button class="btn btn-sm btn-outline" :disabled="!newChecklistTitle.trim()" @click="addChecklistItem">
             Hinzufügen
           </button>
         </div>
@@ -215,49 +215,63 @@
         </div>
 
         <!-- Form for new communication entry -->
-        <div class="bg-base-200/50 p-3 rounded-xl border border-base-300 space-y-2.5">
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <select v-model="newComm.channel" class="select select-xs select-bordered w-full">
-              <option value="phone">📞 Telefonat</option>
-              <option value="email">✉️ E-Mail</option>
-              <option value="meeting">🤝 Besichtigung / Termin</option>
-              <option value="note">📝 Notiz / Gedanke</option>
-            </select>
+        <div class="bg-base-200/50 p-4 rounded-xl border border-base-300 space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="label label-text text-xs py-1">Art</label>
+              <select v-model="newComm.channel" class="select select-sm select-bordered w-full">
+                <option value="phone">Telefonat</option>
+                <option value="email">E-Mail</option>
+                <option value="meeting">Besichtigung / Termin</option>
+                <option value="note">Notiz / Gedanke</option>
+              </select>
+            </div>
 
-            <select v-model="newComm.direction" class="select select-xs select-bordered w-full">
-              <option value="outbound">Gesendet / Ausgehend</option>
-              <option value="inbound">Empfangen / Eingehend</option>
-            </select>
+            <div>
+              <label class="label label-text text-xs py-1">Richtung</label>
+              <select v-model="newComm.direction" class="select select-sm select-bordered w-full">
+                <option value="outbound">Gesendet / Ausgehend</option>
+                <option value="inbound">Empfangen / Eingehend</option>
+              </select>
+            </div>
 
+            <div>
+              <label class="label label-text text-xs py-1">Wiedervorlage</label>
+              <input 
+                v-model="newComm.nextFollowUpDate" 
+                type="date" 
+                class="input input-sm input-bordered w-full"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="label label-text text-xs py-1">Zusammenfassung</label>
             <input 
-              v-model="newComm.nextFollowUpDate" 
-              type="date" 
-              class="input input-xs input-bordered w-full"
-              placeholder="Wiedervorlage / Frist"
+              v-model="newComm.summary" 
+              type="text" 
+              placeholder="z. B. Telefonat wegen B-Plan und Erschließung" 
+              class="input input-sm input-bordered w-full"
             />
           </div>
 
-          <input 
-            v-model="newComm.summary" 
-            type="text" 
-            placeholder="Kurze Zusammenfassung (z. B. 'Telefonat wegen B-Plan und Erschließung')" 
-            class="input input-xs input-bordered w-full font-medium"
-          />
+          <div>
+            <label class="label label-text text-xs py-1">Details <span class="text-base-content/50 font-normal">(optional)</span></label>
+            <textarea 
+              v-model="newComm.details" 
+              rows="3" 
+              placeholder="Vereinbarungen, Antworten des Maklers, offene Punkte..." 
+              class="textarea textarea-sm textarea-bordered w-full"
+            ></textarea>
+          </div>
 
-          <textarea 
-            v-model="newComm.details" 
-            rows="2" 
-            placeholder="Details, Vereinbarungen, Antworten des Maklers..." 
-            class="textarea textarea-xs textarea-bordered w-full"
-          ></textarea>
-
-          <div class="flex justify-end">
+          <div class="flex justify-end pt-1">
             <button 
-              class="btn btn-xs btn-primary gap-1"
+              class="btn btn-sm btn-primary gap-1.5"
               :disabled="savingComm || !newComm.summary.trim()"
               @click="addCommunication"
             >
-              <Icon name="lucide:plus" class="w-3.5 h-3.5" />
+              <Icon name="lucide:plus" class="w-4 h-4" />
               <span>Eintrag speichern</span>
             </button>
           </div>
@@ -279,7 +293,7 @@
                 <span class="badge badge-sm badge-ghost font-medium">
                   {{ getChannelIcon(comm.channel) }} {{ getChannelLabel(comm.channel) }}
                 </span>
-                <span class="text-base-content/60 text-[11px]">
+                <span class="text-base-content/60 text-xs">
                   {{ formatDate(comm.createdAt) }}
                 </span>
                 <span v-if="comm.nextFollowUpDate" class="badge badge-xs badge-warning font-mono">

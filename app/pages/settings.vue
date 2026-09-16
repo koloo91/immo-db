@@ -47,11 +47,11 @@
                 {{ settings?.meilisearch?.online ? 'Online' : 'Offline' }}
               </span>
             </div>
-            <p class="text-[11px] text-base-content/60 font-mono break-all">{{ settings?.meilisearch?.url }}</p>
-            <p v-if="settings?.meilisearch?.version" class="text-[11px] text-base-content/60 mt-1">
+            <p class="text-xs text-base-content/60 font-mono break-all">{{ settings?.meilisearch?.url }}</p>
+            <p v-if="settings?.meilisearch?.version" class="text-xs text-base-content/60 mt-1">
               Version {{ settings.meilisearch.version }}
             </p>
-            <p v-else class="text-[11px] text-warning mt-1">{{ settings?.meilisearch?.message }}</p>
+            <p v-else class="text-xs text-warning mt-1">{{ settings?.meilisearch?.message }}</p>
           </div>
 
           <!-- Redis / Queue -->
@@ -62,10 +62,10 @@
                 {{ settings?.redis?.online ? 'Online' : 'Offline' }}
               </span>
             </div>
-            <p class="text-[11px] text-base-content/60 font-mono break-all">{{ settings?.redis?.url }}</p>
+            <p class="text-xs text-base-content/60 font-mono break-all">{{ settings?.redis?.url }}</p>
             <div v-if="settings?.redis?.counts" class="space-y-1.5 mt-1.5">
               <div>
-                <span class="text-[11px] text-base-content/50 block mb-0.5">Dokumente</span>
+                <span class="text-xs text-base-content/50 block mb-0.5">Dokumente</span>
                 <div class="flex flex-wrap gap-1">
                   <span v-for="(n, key) in settings.redis.counts" :key="key" class="badge badge-xs badge-ghost font-mono">
                     {{ key }}: {{ n }}
@@ -73,7 +73,7 @@
                 </div>
               </div>
               <div v-if="settings?.redis?.listingCounts">
-                <span class="text-[11px] text-base-content/50 block mb-0.5">Inseratsprüfung</span>
+                <span class="text-xs text-base-content/50 block mb-0.5">Inseratsprüfung</span>
                 <div class="flex flex-wrap gap-1">
                   <span v-for="(n, key) in settings.redis.listingCounts" :key="key" class="badge badge-xs badge-ghost font-mono">
                     {{ key }}: {{ n }}
@@ -81,7 +81,7 @@
                 </div>
               </div>
             </div>
-            <p v-else class="text-[11px] text-warning mt-1">{{ settings?.redis?.message }}</p>
+            <p v-else class="text-xs text-warning mt-1">{{ settings?.redis?.message }}</p>
           </div>
         </div>
 
@@ -92,7 +92,7 @@
               Ohne diese Dienste bleibt die ⌘K-Suche leer und hochgeladene Dokumente werden erst
               beim nächsten Serverstart verarbeitet. Starte sie mit:
             </span>
-            <code class="block bg-base-300/50 rounded px-2 py-1 font-mono text-[11px]">docker compose up -d</code>
+            <code class="block bg-base-300/50 rounded px-2 py-1 font-mono text-xs">docker compose up -d</code>
           </div>
         </div>
 
@@ -236,7 +236,7 @@
             <span>Konfigurierter API Key:</span>
             <code class="bg-base-200 px-2 py-0.5 rounded font-mono">{{ settings.gemini.keyMasked }}</code>
           </div>
-          <p class="text-success text-[11px] pt-1 flex items-center gap-1">
+          <p class="text-success text-xs pt-1 flex items-center gap-1">
             <Icon name="lucide:check" class="w-3.5 h-3.5" />
             PDF-Extraktion, URL-Analyse und Dokumenten-Chat laufen live über die Gemini API.
           </p>
@@ -249,7 +249,7 @@
           <div class="bg-base-300 p-3 rounded-xl font-mono text-xs">
             <code>GEMINI_API_KEY=dein_api_key_hier</code>
           </div>
-          <p class="text-base-content/60 text-[11px]">
+          <p class="text-base-content/60 text-xs">
             Trage deinen Key in die <code>.env</code> Datei ein und starte den Server neu.
           </p>
         </div>

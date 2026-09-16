@@ -3,13 +3,13 @@
     <!-- Header -->
     <div class="p-3.5 border-b border-base-200 flex items-center justify-between bg-base-200/40 rounded-t-xl">
       <div class="flex items-center gap-2">
-        <div class="w-2.5 h-2.5 rounded-full bg-accent animate-pulse"></div>
+        <div class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></div>
         <h3 class="font-bold text-sm flex items-center gap-1.5">
-          <Icon name="lucide:bot" class="w-4 h-4 text-accent" />
+          <Icon name="lucide:bot" class="w-4 h-4 text-primary" />
           <span>KI-Assistent: Fragen zu den Dokumenten (Gemini)</span>
         </h3>
       </div>
-      <span class="text-[11px] text-base-content/60 font-mono">Q&A mit Exposé & B-Plan</span>
+      <span class="text-xs text-base-content/60 font-mono">Q&A mit Exposé & B-Plan</span>
     </div>
 
     <!-- Chat Messages Container -->

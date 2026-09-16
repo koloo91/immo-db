@@ -62,7 +62,7 @@
               </button>
             </div>
           </div>
-          <pre class="text-[11px] whitespace-pre-wrap font-sans text-base-content/80 max-h-40 overflow-y-auto">{{ draft.bodyText }}</pre>
+          <pre class="text-xs whitespace-pre-wrap font-sans text-base-content/80 max-h-40 overflow-y-auto">{{ draft.bodyText }}</pre>
         </div>
       </div>
 
@@ -87,7 +87,7 @@
           >
             <div class="min-w-0 space-y-0.5">
               <div class="font-semibold text-xs truncate">{{ thread.subject }}</div>
-              <div class="text-[11px] text-base-content/60 flex items-center gap-2 flex-wrap">
+              <div class="text-xs text-base-content/60 flex items-center gap-2 flex-wrap">
                 <span>{{ thread.messages?.length || 0 }} Nachricht{{ (thread.messages?.length || 0) === 1 ? '' : 'en' }}</span>
                 <span>&bull;</span>
                 <span>zuletzt {{ formatDate(thread.lastMessageAt) }}</span>
@@ -123,7 +123,7 @@
                     <Icon name="lucide:arrow-right" class="w-3 h-3 text-base-content/40 shrink-0" />
                     <span class="truncate text-base-content/70 font-normal">{{ message.toAddress || '-' }}</span>
                   </div>
-                  <div class="text-[11px] text-base-content/60">
+                  <div class="text-xs text-base-content/60">
                     {{ formatDate(message.occurredAt || message.createdAt) }}
                     <span v-if="message.nextFollowUpDate" class="badge badge-xs badge-warning font-mono ml-1">
                       Frist: {{ message.nextFollowUpDate }}
@@ -145,7 +145,7 @@
 
               <pre
                 v-if="message.bodyText"
-                class="text-[11px] whitespace-pre-wrap font-sans bg-base-200/40 p-2 rounded max-h-48 overflow-y-auto"
+                class="text-xs whitespace-pre-wrap font-sans bg-base-200/40 p-2 rounded max-h-48 overflow-y-auto"
               >{{ message.bodyText }}</pre>
 
               <!-- KI-Erkenntnisse -->
@@ -153,7 +153,7 @@
                 <span
                   v-for="(commitment, i) in insightsOf(message).commitments || []"
                   :key="'c' + i"
-                  class="badge badge-xs badge-info gap-1 h-auto py-1 whitespace-normal text-left"
+                  class="badge badge-xs badge-ghost gap-1 h-auto py-1 whitespace-normal text-left"
                 >
                   <Icon name="lucide:handshake" class="w-3 h-3 shrink-0" />
                   {{ commitment }}
@@ -311,8 +311,8 @@
           </details>
 
           <!-- Erkannte Zusagen -->
-          <div v-if="preview.insights?.commitments?.length" class="bg-info/10 border border-info/30 rounded-lg p-2.5">
-            <div class="text-xs font-semibold text-info flex items-center gap-1 mb-1">
+          <div v-if="preview.insights?.commitments?.length" class="bg-base-200/60 border border-base-300 rounded-lg p-2.5">
+            <div class="text-xs font-semibold text-base-content/80 flex items-center gap-1 mb-1">
               <Icon name="lucide:handshake" class="w-3.5 h-3.5" />
               Erkannte Zusagen
             </div>
@@ -322,8 +322,8 @@
           </div>
 
           <!-- Erkannte Fakten -->
-          <div v-if="preview.insights?.facts?.length" class="bg-success/10 border border-success/30 rounded-lg p-2.5">
-            <div class="text-xs font-semibold text-success flex items-center gap-1 mb-1">
+          <div v-if="preview.insights?.facts?.length" class="bg-base-200/60 border border-base-300 rounded-lg p-2.5">
+            <div class="text-xs font-semibold text-base-content/80 flex items-center gap-1 mb-1">
               <Icon name="lucide:database" class="w-3.5 h-3.5" />
               Erkannte Grundstücksdaten
             </div>
@@ -333,7 +333,7 @@
                 <span class="text-base-content/50 italic">&ndash; &bdquo;{{ fact.quote }}&ldquo;</span>
               </li>
             </ul>
-            <p class="text-[11px] text-base-content/50 mt-1">
+            <p class="text-xs text-base-content/50 mt-1">
               Werte werden nicht automatisch übernommen &ndash; trage sie bei Bedarf oben im Grundstück nach.
             </p>
           </div>
@@ -367,7 +367,7 @@
             >
               <input v-model="attachment.keep" type="checkbox" class="checkbox checkbox-xs checkbox-primary" />
               <span class="flex-1 truncate">{{ attachment.fileName }} ({{ (attachment.size / 1024).toFixed(0) }} KB)</span>
-              <select v-model="attachment.docType" class="select select-xs select-bordered">
+              <select v-model="attachment.docType" class="select select-sm select-bordered">
                 <option value="expose">Exposé</option>
                 <option value="bplan">Bebauungsplan</option>
                 <option value="kataster">Katasterauszug</option>

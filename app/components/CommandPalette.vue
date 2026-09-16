@@ -35,7 +35,7 @@
         <div v-if="!query.trim()" class="px-4 py-8 text-center text-xs text-base-content/50 space-y-2">
           <Icon name="lucide:search" class="w-7 h-7 mx-auto text-base-content/20" />
           <p>Durchsucht Exposé-Inhalte, den kompletten Mailverlauf, KI-Analysen und Stammdaten.</p>
-          <p class="text-[11px]">Treffer in Dokumenten zeigen die Seitenzahl.</p>
+          <p class="text-xs">Treffer in Dokumenten zeigen die Seitenzahl.</p>
         </div>
 
         <div v-else-if="!loading && flatHits.length === 0" class="px-4 py-8 text-center text-xs text-base-content/50">
@@ -43,7 +43,7 @@
         </div>
 
         <div v-for="group in groups" :key="group.type" class="py-1">
-          <div class="px-4 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-base-content/50 bg-base-200/40">
+          <div class="px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-base-content/50 bg-base-200/40">
             {{ group.label }}
             <span class="font-mono font-normal">({{ group.hits.length }})</span>
           </div>
@@ -65,8 +65,8 @@
                   Seite {{ hit.pageNumber }}
                 </span>
               </div>
-              <div v-if="hit.snippet" class="text-[11px] text-base-content/70 line-clamp-2" v-html="clean(hit.snippet)"></div>
-              <div class="text-[11px] text-base-content/45 flex items-center gap-1.5">
+              <div v-if="hit.snippet" class="text-xs text-base-content/70 line-clamp-2" v-html="clean(hit.snippet)"></div>
+              <div class="text-xs text-base-content/45 flex items-center gap-1.5">
                 <Icon name="lucide:map-pin" class="w-3 h-3" />
                 <span class="truncate">{{ hit.propertyTitle }}</span>
               </div>
@@ -76,7 +76,7 @@
       </div>
 
       <!-- Fußzeile -->
-      <div class="px-4 py-2 border-t border-base-300 flex items-center justify-between text-[11px] text-base-content/50 bg-base-200/30">
+      <div class="px-4 py-2 border-t border-base-300 flex items-center justify-between text-xs text-base-content/50 bg-base-200/30">
         <div class="flex items-center gap-3">
           <span><kbd class="kbd kbd-xs">↑</kbd><kbd class="kbd kbd-xs">↓</kbd> navigieren</span>
           <span><kbd class="kbd kbd-xs">↵</kbd> öffnen</span>

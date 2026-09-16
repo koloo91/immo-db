@@ -58,7 +58,7 @@
         <div class="p-2.5 rounded-lg bg-base-200/50 flex items-center justify-between gap-3">
           <div class="space-y-0.5 min-w-0">
             <div class="font-semibold text-base-content truncate">Grunderwerbsteuer</div>
-            <div class="text-[11px] text-base-content/60">Brandenburg Landessteuer</div>
+            <div class="text-xs text-base-content/60">Brandenburg Landessteuer</div>
           </div>
           <div class="flex items-center gap-3 shrink-0">
             <div class="flex items-center gap-1">
@@ -68,10 +68,10 @@
                 step="0.1" 
                 min="0" 
                 max="25"
-                class="input input-xs input-bordered w-14 font-mono text-center h-6 py-0 px-1 text-xs"
+                class="input input-sm input-bordered w-14 font-mono text-center h-6 py-0 px-1 text-xs"
                 @input="triggerAutoSave"
               />
-              <span class="text-[11px] text-base-content/60 font-mono">%</span>
+              <span class="text-xs text-base-content/60 font-mono">%</span>
             </div>
             <div class="text-right font-mono font-bold text-sm w-20">
               {{ taxAmount.toLocaleString('de-DE') }} €
@@ -83,7 +83,7 @@
         <div class="p-2.5 rounded-lg bg-base-200/50 flex items-center justify-between gap-3">
           <div class="space-y-0.5 min-w-0">
             <div class="font-semibold text-base-content truncate">Notarkosten</div>
-            <div class="text-[11px] text-base-content/60">Kaufvertrag & Beurkundung</div>
+            <div class="text-xs text-base-content/60">Kaufvertrag & Beurkundung</div>
           </div>
           <div class="flex items-center gap-3 shrink-0">
             <div class="flex items-center gap-1">
@@ -93,10 +93,10 @@
                 step="0.1" 
                 min="0" 
                 max="10"
-                class="input input-xs input-bordered w-14 font-mono text-center h-6 py-0 px-1 text-xs"
+                class="input input-sm input-bordered w-14 font-mono text-center h-6 py-0 px-1 text-xs"
                 @input="triggerAutoSave"
               />
-              <span class="text-[11px] text-base-content/60 font-mono">%</span>
+              <span class="text-xs text-base-content/60 font-mono">%</span>
             </div>
             <div class="text-right font-mono font-bold text-sm w-20">
               {{ notaryAmount.toLocaleString('de-DE') }} €
@@ -108,7 +108,7 @@
         <div class="p-2.5 rounded-lg bg-base-200/50 flex items-center justify-between gap-3">
           <div class="space-y-0.5 min-w-0">
             <div class="font-semibold text-base-content truncate">Grundbucheintrag</div>
-            <div class="text-[11px] text-base-content/60">Auflassungsvormerkung & Eigentum</div>
+            <div class="text-xs text-base-content/60">Auflassungsvormerkung & Eigentum</div>
           </div>
           <div class="flex items-center gap-3 shrink-0">
             <div class="flex items-center gap-1">
@@ -118,10 +118,10 @@
                 step="0.1" 
                 min="0" 
                 max="10"
-                class="input input-xs input-bordered w-14 font-mono text-center h-6 py-0 px-1 text-xs"
+                class="input input-sm input-bordered w-14 font-mono text-center h-6 py-0 px-1 text-xs"
                 @input="triggerAutoSave"
               />
-              <span class="text-[11px] text-base-content/60 font-mono">%</span>
+              <span class="text-xs text-base-content/60 font-mono">%</span>
             </div>
             <div class="text-right font-mono font-bold text-sm w-20">
               {{ registryAmount.toLocaleString('de-DE') }} €
@@ -142,7 +142,7 @@
                   provisionsfrei
                 </span>
               </div>
-              <label class="flex items-center gap-1.5 cursor-pointer select-none text-[11px] text-base-content/60">
+              <label class="flex items-center gap-1.5 cursor-pointer select-none text-xs text-base-content/60">
                 <input 
                   type="checkbox" 
                   class="checkbox checkbox-xs checkbox-primary" 
@@ -161,10 +161,10 @@
                   min="0" 
                   max="15"
                   :disabled="isCommissionFree"
-                  class="input input-xs input-bordered w-14 font-mono text-center h-6 py-0 px-1 text-xs disabled:opacity-40"
+                  class="input input-sm input-bordered w-14 font-mono text-center h-6 py-0 px-1 text-xs disabled:opacity-40"
                   @input="onBrokerInput"
                 />
-                <span class="text-[11px] text-base-content/60 font-mono">%</span>
+                <span class="text-xs text-base-content/60 font-mono">%</span>
               </div>
               <div class="text-right font-mono font-bold text-sm w-20" :class="isCommissionFree ? 'text-base-content/40' : ''">
                 {{ brokerAmount.toLocaleString('de-DE') }} €
@@ -184,10 +184,10 @@
                 step="100" 
                 min="0"
                 placeholder="0" 
-                class="input input-xs input-bordered w-20 font-mono text-right h-6 py-0 px-1 text-xs"
+                class="input input-sm input-bordered w-20 font-mono text-right h-6 py-0 px-1 text-xs"
                 @input="triggerAutoSave"
               />
-              <span class="text-[11px] text-base-content/60">€</span>
+              <span class="text-xs text-base-content/60">€</span>
             </div>
           </div>
         </div>

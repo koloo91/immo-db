@@ -36,7 +36,7 @@
         <Icon :name="stateIcon" class="w-5 h-5 shrink-0" />
         <div class="min-w-0 flex-1 space-y-0.5">
           <div class="text-xs font-semibold">{{ stateLabel }}</div>
-          <div class="text-[11px] text-base-content/60">
+          <div class="text-xs text-base-content/60">
             <template v-if="status?.lastOkAt">
               Zuletzt erfolgreich geprüft: {{ formatDateTime(status.lastOkAt) }}
             </template>
@@ -46,7 +46,7 @@
             <template v-else>Bisher keine Prüfung</template>
             <template v-if="status?.portal"> &middot; {{ portalLabel }}</template>
           </div>
-          <div v-if="status?.state === 'unverifiable' && status?.lastMessage" class="text-[11px] text-base-content/50 line-clamp-2">
+          <div v-if="status?.state === 'unverifiable' && status?.lastMessage" class="text-xs text-base-content/50 line-clamp-2">
             {{ status.lastMessage }}
           </div>
         </div>
@@ -80,7 +80,7 @@
               </template>
               <span v-else-if="obs.price" class="font-mono">{{ euro(obs.price) }}</span>
             </div>
-            <div class="text-[11px] text-base-content/55 flex items-center gap-1.5 flex-wrap">
+            <div class="text-xs text-base-content/55 flex items-center gap-1.5 flex-wrap">
               <span class="badge badge-xs badge-ghost">{{ sourceLabel(obs.source) }}</span>
               <span v-if="obs.note">{{ obs.note }}</span>
             </div>
@@ -94,7 +94,7 @@
           <Icon name="lucide:pencil" class="w-3.5 h-3.5 text-primary" />
           Von Hand erfassen
         </div>
-        <p class="text-[11px] text-base-content/60">
+        <p class="text-xs text-base-content/60">
           Für Portale ohne automatische Prüfung &ndash; oder wenn du den Preis aus einer Makler-Mail kennst.
         </p>
         <div class="flex flex-col sm:flex-row gap-2">

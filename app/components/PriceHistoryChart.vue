@@ -24,7 +24,7 @@
             class="flex-1 flex flex-col items-center gap-1 group relative h-full justify-end"
           >
             <!-- Hover Tooltip -->
-            <div class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 bg-neutral text-neutral-content text-[11px] py-0.5 px-2 rounded font-mono pointer-events-none whitespace-nowrap z-10 shadow-md">
+            <div class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 bg-neutral text-neutral-content text-xs py-0.5 px-2 rounded font-mono pointer-events-none whitespace-nowrap z-10 shadow-md">
               {{ item.price }} €/m² ({{ item.year }})
             </div>
 
@@ -40,7 +40,7 @@
             ></div>
 
             <!-- Year Label below bar -->
-            <span class="text-[11px] font-medium text-base-content/80 mt-1">
+            <span class="text-xs font-medium text-base-content/80 mt-1">
               {{ item.year }}
             </span>
           </div>

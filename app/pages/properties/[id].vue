@@ -157,25 +157,25 @@
       <!-- Quick Metrics Ribbon -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-base-200">
         <div>
-          <span class="text-[11px] text-base-content/60 block">Kaufpreis</span>
+          <span class="text-xs text-base-content/60 block">Kaufpreis</span>
           <span class="text-base sm:text-lg font-bold font-mono text-base-content">
             {{ property.askingPrice ? property.askingPrice.toLocaleString('de-DE') + ' €' : 'Auf Anfrage' }}
           </span>
         </div>
         <div>
-          <span class="text-[11px] text-base-content/60 block">Fläche</span>
+          <span class="text-xs text-base-content/60 block">Fläche</span>
           <span class="text-base sm:text-lg font-bold font-mono text-base-content">
             {{ property.areaSqm ? property.areaSqm + ' m²' : 'k.A.' }}
           </span>
         </div>
         <div>
-          <span class="text-[11px] text-base-content/60 block">Angebotspreis / m²</span>
+          <span class="text-xs text-base-content/60 block">Angebotspreis / m²</span>
           <span class="text-base sm:text-lg font-bold font-mono text-base-content">
             {{ property.pricePerSqm ? Math.round(property.pricePerSqm) + ' €/m²' : '-' }}
           </span>
         </div>
         <div>
-          <span class="text-[11px] text-base-content/60 block">BORIS Bodenrichtwert</span>
+          <span class="text-xs text-base-content/60 block">BORIS Bodenrichtwert</span>
           <div class="flex items-center gap-1.5">
             <span class="text-base sm:text-lg font-bold font-mono text-success">
               {{ property.parcel?.borisBodenrichtwert ? property.parcel.borisBodenrichtwert + ' €/m²' : 'Nicht erfasst' }}
@@ -485,7 +485,7 @@
             <p class="text-xs text-base-content/70 mt-2 font-medium">
               {{ uploading ? 'Dateien werden abgelegt...' : 'PDFs hier ablegen oder klicken zum Auswählen' }}
             </p>
-            <p class="text-[11px] text-base-content/50 mt-0.5">
+            <p class="text-xs text-base-content/50 mt-0.5">
               Mehrfachauswahl möglich &bull; Duplikate werden automatisch erkannt
             </p>
             <input
@@ -520,10 +520,10 @@
                 <Icon name="lucide:file-text" class="w-5 h-5 text-primary shrink-0" />
                 <div class="min-w-0">
                   <h4 class="font-bold text-sm truncate">{{ doc.fileName }}</h4>
-                  <div class="text-[11px] text-base-content/60 flex items-center gap-2 flex-wrap">
+                  <div class="text-xs text-base-content/60 flex items-center gap-2 flex-wrap">
                     <select
                       :value="doc.docType"
-                      class="select select-xs select-bordered h-6 min-h-6 text-[11px]"
+                      class="select select-sm select-bordered h-6 min-h-6 text-xs"
                       :disabled="changingTypeId === doc.id"
                       @change="changeDocType(doc.id, ($event.target as HTMLSelectElement).value)"
                     >
@@ -663,7 +663,7 @@
                 <!-- Extracted Data -->
                 <div v-if="getParsedJson(doc.aiExtractedDataJson)" class="p-3 bg-base-100 rounded-lg border border-base-200 space-y-1.5">
                   <strong class="font-semibold text-xs flex items-center gap-1 text-base-content/80">
-                    <Icon name="lucide:database" class="w-3.5 h-3.5 text-info" />
+                    <Icon name="lucide:database" class="w-3.5 h-3.5 text-base-content/50" />
                     Erkannte Grundstücksdaten:
                   </strong>
                   <ul class="space-y-1 text-base-content/70">
@@ -701,8 +701,8 @@
                   </ul>
 
                   <div v-if="getParsedJson(doc.aiRiskAssessmentJson).openQuestionsForBroker?.length" class="pt-1.5 border-t border-base-200">
-                    <span class="text-[11px] font-semibold text-base-content/70 block">Empfohlene Maklerfragen:</span>
-                    <ul class="space-y-0.5 text-[11px] text-base-content/70 list-disc list-inside mt-0.5">
+                    <span class="text-xs font-semibold text-base-content/70 block">Empfohlene Maklerfragen:</span>
+                    <ul class="space-y-0.5 text-xs text-base-content/70 list-disc list-inside mt-0.5">
                       <li v-for="(q, idx) in getParsedJson(doc.aiRiskAssessmentJson).openQuestionsForBroker" :key="idx">
                         {{ q }}
                       </li>
@@ -870,12 +870,12 @@
                 <div class="font-semibold text-primary truncate">
                   {{ res.title || res.text || res.name || res.properties?.lagebeztxt || 'Flurstück' }}
                 </div>
-                <div class="text-base-content/60 font-mono text-[11px] truncate">
+                <div class="text-base-content/60 font-mono text-xs truncate">
                   {{ res.subtitle || res.properties?.flstkennz || res.category || '' }}
                   <span v-if="res.properties?.flaeche">({{ res.properties.flaeche }} m²)</span>
                 </div>
               </div>
-              <button type="button" class="btn btn-xs btn-primary shrink-0 group-hover:btn-accent">Übernehmen</button>
+              <button type="button" class="btn btn-xs btn-primary shrink-0">Übernehmen</button>
             </div>
           </div>
 
@@ -1541,7 +1541,7 @@ function analysisBadgeClass(status: string) {
   if (status === 'done') return 'badge-success'
   if (status === 'error') return 'badge-error'
   if (status === 'skipped') return 'badge-ghost'
-  return 'badge-info'
+  return 'badge-ghost'
 }
 
 function analysisBadgeIcon(status: string) {
@@ -1614,14 +1614,14 @@ function getStatusLabel(status: string) {
 
 function getStatusBadgeClass(status: string) {
   const map: Record<string, string> = {
-    new: 'badge-info',
-    contacted: 'badge-primary',
-    docs_requested: 'badge-warning',
-    in_review: 'badge-accent',
-    visiting: 'badge-secondary',
+    new: 'badge-ghost',
+    contacted: 'badge-ghost',
+    docs_requested: 'badge-ghost',
+    in_review: 'badge-primary badge-outline',
+    visiting: 'badge-primary',
     offer_made: 'badge-warning',
     purchased: 'badge-success',
-    rejected: 'badge-neutral'
+    rejected: 'badge-ghost opacity-60'
   }
   return map[status] || 'badge-ghost'
 }

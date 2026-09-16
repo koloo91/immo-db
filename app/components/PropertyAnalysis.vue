@@ -49,7 +49,7 @@
             <div class="flex-1 space-y-1 text-center sm:text-left">
               <div class="font-bold text-sm">{{ latest.verdict || 'Ohne Fazit' }}</div>
               <p class="text-xs text-base-content/80 leading-relaxed">{{ latest.summary }}</p>
-              <div class="text-[11px] text-base-content/50">
+              <div class="text-xs text-base-content/50">
                 {{ formatDate(latest.createdAt) }}
                 <span v-if="latest.model"> &bull; {{ latest.model }}</span>
                 <span v-if="snapshot(latest)">
@@ -73,7 +73,7 @@
               </span>
             </div>
             <p class="text-xs text-base-content/70">{{ priceAssessment.reasoning }}</p>
-            <p v-if="priceAssessment.fairPricePerSqm" class="text-[11px] text-base-content/50">
+            <p v-if="priceAssessment.fairPricePerSqm" class="text-xs text-base-content/50">
               Angemessen erscheinen ca. {{ Number(priceAssessment.fairPricePerSqm).toLocaleString('de-DE') }} €/m²
             </p>
           </div>
@@ -93,7 +93,7 @@
                   </span>
                   <span>{{ risk.title || risk }}</span>
                 </div>
-                <div v-if="risk.source" class="text-[11px] text-base-content/50 pl-8">{{ risk.source }}</div>
+                <div v-if="risk.source" class="text-xs text-base-content/50 pl-8">{{ risk.source }}</div>
               </div>
             </div>
 
@@ -105,7 +105,7 @@
               <div v-if="opportunities.length === 0" class="text-xs text-base-content/50">Keine Chancen benannt.</div>
               <div v-for="(opportunity, i) in opportunities" :key="i" class="text-xs space-y-0.5">
                 <div>{{ opportunity.title || opportunity }}</div>
-                <div v-if="opportunity.source" class="text-[11px] text-base-content/50">{{ opportunity.source }}</div>
+                <div v-if="opportunity.source" class="text-xs text-base-content/50">{{ opportunity.source }}</div>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@
             <ul class="text-xs text-base-content/80 list-disc list-inside space-y-1">
               <li v-for="(question, i) in openQuestions" :key="i">{{ question }}</li>
             </ul>
-            <p class="text-[11px] text-base-content/50">
+            <p class="text-xs text-base-content/50">
               Diese Fragen fließen automatisch in die KI-Anfrage im Tab &bdquo;Makler &amp; Kommunikation&ldquo; ein.
             </p>
           </div>
@@ -153,7 +153,7 @@
             </div>
             <div class="flex-1 min-w-0 space-y-0.5">
               <div class="font-semibold">{{ analysis.verdict || 'Ohne Fazit' }}</div>
-              <div class="text-[11px] text-base-content/50">{{ formatDate(analysis.createdAt) }}</div>
+              <div class="text-xs text-base-content/50">{{ formatDate(analysis.createdAt) }}</div>
               <div v-if="diffOf(index)" class="flex flex-wrap gap-1 pt-0.5">
                 <span v-for="(change, i) in diffOf(index)" :key="i" class="badge badge-xs badge-ghost font-mono">
                   {{ change }}

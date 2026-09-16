@@ -46,29 +46,29 @@
         </div>
         <div class="stat-title text-xs">Gesamt Grundstücke</div>
         <div class="stat-value text-xl sm:text-2xl font-mono">{{ properties.length }}</div>
-        <div class="stat-desc text-[11px] text-base-content/60">Im Suchfokus</div>
+        <div class="stat-desc text-xs text-base-content/60">Im Suchfokus</div>
       </div>
 
       <div class="stat bg-base-100 border border-base-300 rounded-xl p-3 sm:p-4 shadow-xs">
-        <div class="stat-figure text-secondary">
+        <div class="stat-figure text-base-content/40">
           <Icon name="lucide:search" class="w-6 h-6 opacity-70" />
         </div>
         <div class="stat-title text-xs">In Prüfung / Besichtigung</div>
-        <div class="stat-value text-xl sm:text-2xl font-mono text-secondary">
+        <div class="stat-value text-xl sm:text-2xl font-mono">
           {{ activePropertiesCount }}
         </div>
-        <div class="stat-desc text-[11px] text-base-content/60">Aktive Pipeline</div>
+        <div class="stat-desc text-xs text-base-content/60">Aktive Pipeline</div>
       </div>
 
       <div class="stat bg-base-100 border border-base-300 rounded-xl p-3 sm:p-4 shadow-xs">
-        <div class="stat-figure text-accent">
+        <div class="stat-figure text-base-content/40">
           <Icon name="lucide:euro" class="w-6 h-6 opacity-70" />
         </div>
         <div class="stat-title text-xs">Ø Angebotspreis/m²</div>
-        <div class="stat-value text-xl sm:text-2xl font-mono text-accent">
+        <div class="stat-value text-xl sm:text-2xl font-mono">
           {{ avgPricePerSqm ? `${avgPricePerSqm} €` : '-' }}
         </div>
-        <div class="stat-desc text-[11px] text-base-content/60">Über alle Angebote</div>
+        <div class="stat-desc text-xs text-base-content/60">Über alle Angebote</div>
       </div>
 
       <div class="stat bg-base-100 border border-base-300 rounded-xl p-3 sm:p-4 shadow-xs">
@@ -79,7 +79,7 @@
         <div class="stat-value text-xl sm:text-2xl font-mono text-success">
           {{ avgBorisValue ? `${avgBorisValue} €/m²` : '-' }}
         </div>
-        <div class="stat-desc text-[11px] text-base-content/60">Amtliche Richtwerte</div>
+        <div class="stat-desc text-xs text-base-content/60">Amtliche Richtwerte</div>
       </div>
     </div>
 

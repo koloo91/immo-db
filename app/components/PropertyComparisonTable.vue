@@ -190,7 +190,7 @@
             <!-- Building Law & GRZ/GFZ -->
             <td class="text-xs">
               <div>{{ p.buildingLaw || 'Nicht spezifiziert' }}</div>
-              <div v-if="p.grz || p.gfz" class="text-base-content/60 text-[11px] mt-0.5">
+              <div v-if="p.grz || p.gfz" class="text-base-content/60 text-xs mt-0.5">
                 <span v-if="p.grz">GRZ: {{ p.grz }}</span>
                 <span v-if="p.gfz" class="ml-1">GFZ: {{ p.gfz }}</span>
               </div>
@@ -199,7 +199,7 @@
             <!-- Broker -->
             <td class="text-xs">
               <div v-if="p.broker?.name" class="font-medium">{{ p.broker.name }}</div>
-              <div v-if="p.broker?.company" class="text-base-content/60 text-[11px] truncate max-w-[130px]">{{ p.broker.company }}</div>
+              <div v-if="p.broker?.company" class="text-base-content/60 text-xs truncate max-w-[130px]">{{ p.broker.company }}</div>
               <div v-if="!p.broker?.name && !p.broker?.company">
                 <span class="badge badge-xs badge-success">Provisionsfrei</span>
               </div>
@@ -329,14 +329,14 @@ function getStatusLabel(status: string) {
 
 function getStatusBadgeClass(status: string) {
   const map: Record<string, string> = {
-    new: 'badge-info',
-    contacted: 'badge-primary',
-    docs_requested: 'badge-warning',
-    in_review: 'badge-accent',
-    visiting: 'badge-secondary',
+    new: 'badge-ghost',
+    contacted: 'badge-ghost',
+    docs_requested: 'badge-ghost',
+    in_review: 'badge-primary badge-outline',
+    visiting: 'badge-primary',
     offer_made: 'badge-warning',
     purchased: 'badge-success',
-    rejected: 'badge-neutral'
+    rejected: 'badge-ghost opacity-60'
   }
   return map[status] || 'badge-ghost'
 }

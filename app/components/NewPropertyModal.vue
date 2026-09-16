@@ -98,7 +98,7 @@
 
         <!-- Extracted Images Preview -->
         <div v-if="form.images && form.images.length > 0" class="space-y-1.5 pt-1">
-          <div class="flex items-center justify-between text-[11px] text-base-content/70">
+          <div class="flex items-center justify-between text-xs text-base-content/70">
             <span class="font-semibold flex items-center gap-1">
               <Icon name="lucide:images" class="w-3.5 h-3.5 text-primary" />
               Erkannte Bilder ({{ form.images.length }}):
@@ -270,7 +270,7 @@
               v-model="form.notes" 
               rows="2" 
               placeholder="Besonderheiten, Ausrichtung, Erschließungsangaben..." 
-              class="textarea textarea-xs textarea-bordered w-full"
+              class="textarea textarea-sm textarea-bordered w-full"
             ></textarea>
           </div>
         </div>
