@@ -91,6 +91,9 @@ export function buildBookmarklet(origin: string): string {
   window.open('${origin}/erfassen#'+kodiert,'_blank');
 })();`.trim()
 
-  const compact = source.split('\n').map(line => line.trim()).join('')
+  // Zeilenumbrüche BEHALTEN und nur kodieren (%0A). Ein Zusammenziehen auf eine Zeile
+  // würde den Zeilenkommentar unten alles Nachfolgende verschlucken - der Browser meldete
+  // dann "Unexpected end of input". Nur die Einrückung fällt weg.
+  const compact = source.split('\n').map(line => line.trim()).join('\n')
   return 'javascript:' + encodeURIComponent(compact)
 }
