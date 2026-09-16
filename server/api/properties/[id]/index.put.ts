@@ -43,8 +43,14 @@ export default defineEventHandler(async (event) => {
   if (body.adUrl !== undefined) updateData.adUrl = body.adUrl
   if (body.notes !== undefined) updateData.notes = body.notes
   if (body.buildingLaw !== undefined) updateData.buildingLaw = body.buildingLaw
-  if (body.grz !== undefined) updateData.grz = body.grz ? Number(body.grz) : null
-  if (body.gfz !== undefined) updateData.gfz = body.gfz ? Number(body.gfz) : null
+  // Auf null/'' prüfen statt auf Falsyness: mit `body.grz ? ... : null` wurde eine
+  // eingetragene 0 stillschweigend zu null - der Wert verschwand beim Speichern.
+  if (body.grz !== undefined) {
+    updateData.grz = body.grz === null || body.grz === '' ? null : Number(body.grz)
+  }
+  if (body.gfz !== undefined) {
+    updateData.gfz = body.gfz === null || body.gfz === '' ? null : Number(body.gfz)
+  }
   if (body.developmentStatus !== undefined) updateData.developmentStatus = body.developmentStatus
   if (body.purchaseCostsPercent !== undefined) updateData.purchaseCostsPercent = Number(body.purchaseCostsPercent)
   if (body.latitude !== undefined) updateData.latitude = body.latitude ? Number(body.latitude) : null

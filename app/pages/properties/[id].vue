@@ -382,12 +382,24 @@
           <!-- Building Law & Planning Parameters -->
           <div class="card bg-base-100 border border-base-300 shadow-sm">
             <div class="card-body p-4 space-y-3">
-              <h3 class="font-bold text-sm flex items-center gap-2 border-b border-base-200 pb-2">
-                <Icon name="lucide:hammer" class="w-4 h-4 text-primary" />
-                Baurecht & Bebaubarkeit
-              </h3>
+              <div class="flex items-center justify-between border-b border-base-200 pb-2">
+                <h3 class="font-bold text-sm flex items-center gap-2">
+                  <Icon name="lucide:hammer" class="w-4 h-4 text-primary" />
+                  Baurecht & Bebaubarkeit
+                </h3>
+                <button
+                  class="btn btn-ghost btn-sm text-primary gap-1"
+                  :disabled="savingBuildingLaw"
+                  @click="toggleBuildingLawEdit"
+                >
+                  <span v-if="savingBuildingLaw" class="loading loading-spinner loading-xs"></span>
+                  <Icon v-else :name="editingBuildingLaw ? 'lucide:check' : 'lucide:edit-2'" class="w-3.5 h-3.5" />
+                  <span>{{ editingBuildingLaw ? 'Speichern' : 'Ändern' }}</span>
+                </button>
+              </div>
 
-              <div class="space-y-2 text-xs">
+              <!-- Ansicht -->
+              <div v-if="!editingBuildingLaw" class="space-y-2 text-xs">
                 <div class="flex justify-between py-1 border-b border-base-200">
                   <span class="text-base-content/60">Grundlage:</span>
                   <span class="font-medium">{{ property.buildingLaw || 'Nicht angegeben' }}</span>
@@ -403,6 +415,60 @@
                 <div class="flex justify-between py-1">
                   <span class="text-base-content/60">Erschließung:</span>
                   <span class="badge badge-sm badge-ghost">{{ property.developmentStatus || 'unbekannt' }}</span>
+                </div>
+              </div>
+
+              <!-- Bearbeiten -->
+              <div v-else class="space-y-3">
+                <div>
+                  <label class="label label-text text-xs py-1">Grundlage</label>
+                  <input
+                    v-model="buildingLawForm.buildingLaw"
+                    type="text"
+                    class="input input-sm input-bordered w-full"
+                    placeholder="z. B. B-Plan Nr. 12 oder §34 BauGB"
+                    @keyup.enter="saveBuildingLaw"
+                  />
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="label label-text text-xs py-1">GRZ</label>
+                    <input
+                      v-model.number="buildingLawForm.grz"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      class="input input-sm input-bordered w-full font-mono"
+                      placeholder="0.25"
+                      @keyup.enter="saveBuildingLaw"
+                    />
+                  </div>
+                  <div>
+                    <label class="label label-text text-xs py-1">GFZ</label>
+                    <input
+                      v-model.number="buildingLawForm.gfz"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      class="input input-sm input-bordered w-full font-mono"
+                      placeholder="0.5"
+                      @keyup.enter="saveBuildingLaw"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label class="label label-text text-xs py-1">Erschließung</label>
+                  <select v-model="buildingLawForm.developmentStatus" class="select select-sm select-bordered w-full">
+                    <option value="">unbekannt</option>
+                    <option value="voll erschlossen">voll erschlossen</option>
+                    <option value="teilerschlossen">teilerschlossen</option>
+                    <option value="unerschlossen">unerschlossen</option>
+                  </select>
+                </div>
+                <div class="flex justify-end gap-2">
+                  <button class="btn btn-sm btn-ghost" :disabled="savingBuildingLaw" @click="editingBuildingLaw = false">
+                    Abbrechen
+                  </button>
                 </div>
               </div>
             </div>
@@ -1178,6 +1244,52 @@ const docDragOver = ref(false)
 const latestAnalysis = computed(() => property.value?.analyses?.[0] || null)
 
 // Zustand der Inseratsprüfung
+// Baurecht direkt in der Karte bearbeiten - wie bei der Makler-Karte.
+// Vorher waren die Werte nur über das Stift-Symbol ganz oben erreichbar,
+// obwohl die Nachbarkarte (ALKIS) einen eigenen "Ändern"-Knopf hat.
+const editingBuildingLaw = ref(false)
+const savingBuildingLaw = ref(false)
+const buildingLawForm = reactive({
+  buildingLaw: '',
+  grz: null as number | null,
+  gfz: null as number | null,
+  developmentStatus: ''
+})
+
+function toggleBuildingLawEdit() {
+  if (editingBuildingLaw.value) {
+    saveBuildingLaw()
+    return
+  }
+  buildingLawForm.buildingLaw = property.value?.buildingLaw || ''
+  buildingLawForm.grz = property.value?.grz ?? null
+  buildingLawForm.gfz = property.value?.gfz ?? null
+  buildingLawForm.developmentStatus = property.value?.developmentStatus || ''
+  editingBuildingLaw.value = true
+}
+
+async function saveBuildingLaw() {
+  savingBuildingLaw.value = true
+  try {
+    await $fetch(`/api/properties/${propertyId}`, {
+      method: 'PUT',
+      body: {
+        buildingLaw: buildingLawForm.buildingLaw.trim() || null,
+        grz: buildingLawForm.grz,
+        gfz: buildingLawForm.gfz,
+        developmentStatus: buildingLawForm.developmentStatus || null
+      }
+    })
+    editingBuildingLaw.value = false
+    await refresh()
+    toast.success('Baurecht gespeichert.')
+  } catch (err: any) {
+    toast.error('Fehler beim Speichern: ' + (err.data?.statusMessage || err.message))
+  } finally {
+    savingBuildingLaw.value = false
+  }
+}
+
 const listing = computed<any>(() => property.value?.listingStatus || null)
 const resolvingAlert = ref(false)
 
