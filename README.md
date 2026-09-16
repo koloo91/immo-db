@@ -60,6 +60,12 @@ Eine moderne Webanwendung zur Verwaltung, Recherche, KI-gestützten Analyse und 
   - Badges in Kanban und Vergleichstabelle, damit man nicht jeden Eintrag einzeln öffnen muss.
   - **Ohne KI-Kosten:** der Tageslauf liest Preis und Titel portalspezifisch aus (immowelt über JSON-LD/og:title, Kleinanzeigen über das Preis-Element) &ndash; der volle Gemini-Sync bleibt ein manueller Knopf und überschreibt nichts nebenbei.
   - ImmobilienScout24 lässt keine automatische Prüfung zu; dort trägst du den Preis mit einem Klick von Hand nach, der Verlauf ist derselbe.
+- 🔖 **ImmoScout24 per Lesezeichen erfassen:**
+  - ImmobilienScout24 weist Server-Abrufe mit HTTP 401 ab &ndash; auch über FlareSolverr, das dort „Challenge not detected" meldet. Ein echter Browser kommt dagegen ganz normal durch.
+  - Ein Lesezeichen in der Browserleiste liest das Exposé dort aus, wo du es ohnehin ansiehst: bevorzugt aus dem JSON-LD `RealEstateListing` (Titel, Adresse, Preis), ergänzt um Fläche, Erschließung und Bebaubarkeit aus der Seite.
+  - Es **navigiert** in die App statt zu senden: Chrome blockiert Anfragen von einer öffentlichen HTTPS-Seite an lokale Adressen (Private Network Access) &ndash; gemessen, auch mit gesetztem `Access-Control-Allow-Private-Network`. Die Daten reisen im URL-Fragment und erreichen daher keinen Server-Log.
+  - Auf der Seite `/erfassen` siehst du die gelesenen Werte und bestätigst sie. Kennt die App das Inserat schon, wird daraus eine Preisprüfung mit Historieneintrag; sonst entsteht ein neues Grundstück.
+  - Einrichtung unter **Dienste & API**. Funktioniert ebenso bei immowelt und Kleinanzeigen.
 - 💰 **Kaufnebenkosten-Rechner:** Automatische Kalkulation von Grunderwerbsteuer (BB 6,5 %), Notar/Grundbuch (2,0 %) und Maklerprovision.
 
 ---

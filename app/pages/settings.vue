@@ -8,6 +8,80 @@
     </div>
 
 
+
+    <!-- ImmoScout per Lesezeichen -->
+    <div class="card bg-base-100 border border-base-300 shadow-sm">
+      <div class="card-body p-5 space-y-4">
+        <div class="flex items-center gap-3 border-b border-base-200 pb-3">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-primary/10 text-primary">
+            <Icon name="lucide:bookmark" class="w-5 h-5" />
+          </div>
+          <div>
+            <h3 class="font-bold text-base">ImmoScout24 per Lesezeichen erfassen</h3>
+            <p class="text-xs text-base-content/60">
+              Für Portale, die keine automatische Prüfung zulassen
+            </p>
+          </div>
+        </div>
+
+        <div class="text-xs text-base-content/80 space-y-2">
+          <p>
+            ImmobilienScout24 weist Abrufe vom Server ab &ndash; dein Browser kommt aber ganz normal
+            durch. Dieses Lesezeichen liest die Daten dort aus, wo du das Exposé ohnehin ansiehst,
+            und schickt sie hierher.
+          </p>
+          <ol class="list-decimal list-inside space-y-1 text-base-content/70">
+            <li>Lesezeichenleiste einblenden (<kbd class="kbd kbd-xs">⌘</kbd><kbd class="kbd kbd-xs">⇧</kbd><kbd class="kbd kbd-xs">B</kbd>)</li>
+            <li>Den Knopf unten in die Leiste ziehen</li>
+            <li>Auf einem Exposé darauf klicken &ndash; fertig</li>
+          </ol>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex flex-wrap items-center gap-3 p-4 bg-base-200/50 rounded-xl border border-base-300 border-dashed">
+            <a
+              :href="bookmarkletHref"
+              class="btn btn-sm btn-primary gap-1.5 cursor-grab active:cursor-grabbing"
+              draggable="true"
+              @click.prevent
+            >
+              <Icon name="lucide:download" class="w-4 h-4" />
+              In ImmoDB erfassen
+            </a>
+            <span class="text-xs text-base-content/60">&larr; in die Lesezeichenleiste ziehen</span>
+          </div>
+
+          <details class="collapse collapse-arrow bg-base-200/40 border border-base-300">
+            <summary class="collapse-title text-xs font-semibold min-h-0 py-2">
+              Klappt das Ziehen nicht? Quelltext von Hand kopieren
+            </summary>
+            <div class="collapse-content space-y-2">
+              <p class="text-xs text-base-content/60">
+                Neues Lesezeichen anlegen und als Adresse einfügen:
+              </p>
+              <textarea
+                readonly
+                rows="3"
+                class="textarea textarea-sm textarea-bordered w-full font-mono text-xs"
+                :value="bookmarkletHref"
+                @focus="($event.target as HTMLTextAreaElement).select()"
+              ></textarea>
+              <button class="btn btn-sm btn-outline gap-1.5" @click="copyBookmarklet">
+                <Icon name="lucide:copy" class="w-4 h-4" />
+                {{ bookmarkletCopied ? 'Kopiert!' : 'Quelltext kopieren' }}
+              </button>
+            </div>
+          </details>
+
+          <div class="text-xs text-base-content/50">
+            Das Lesezeichen öffnet einen Tab mit den gelesenen Werten – erst dein Klick dort
+            speichert sie. Kennt die App das Inserat bereits, wird daraus eine Preisprüfung mit
+            Historieneintrag; ein geänderter Preis wird vorgeschlagen, nicht übernommen.
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Suche & Job-Queue -->
     <div class="card bg-base-100 border border-base-300 shadow-sm">
       <div class="card-body p-5 space-y-4">
@@ -259,6 +333,19 @@
 </template>
 
 <script setup lang="ts">
+const bookmarkletCopied = ref(false)
+
+const bookmarkletHref = computed(() => {
+  if (typeof window === 'undefined') return ''
+  return buildBookmarklet(window.location.origin)
+})
+
+async function copyBookmarklet() {
+  await navigator.clipboard.writeText(bookmarkletHref.value)
+  bookmarkletCopied.value = true
+  setTimeout(() => (bookmarkletCopied.value = false), 2000)
+}
+
 const reindexing = ref(false)
 const reindexResult = ref<any>(null)
 
