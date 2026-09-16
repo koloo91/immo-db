@@ -1,9 +1,19 @@
 {
   "$schema": "https://schema.railpack.com",
   "packages": {
-    "node": "26"
+    "node": "22",
+    "bun": "latest"
   },
+  "buildAptPackages": [
+    "python3",
+    "make",
+    "g++"
+  ],
   "deploy": {
-    "startCommand": "bunx drizzle-kit migrate && node .output/server/index.mjs"
+    "aptPackages": [
+      "libatomic1",
+      "ca-certificates"
+    ],
+    "startCommand": "node .output/server/index.mjs"
   }
 }

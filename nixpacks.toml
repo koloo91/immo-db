@@ -1,6 +1,8 @@
-# Nixpacks configuration for Railway / Coolify
+# Nixpacks configuration for Railway
 [phases.setup]
-nixPkgs = ["...", "python3", "gcc", "gnumake", "pkg-config"]
+nixPkgs = ["...", "python3", "gcc", "gnumake", "pkg-config", "gcc-unwrapped"]
+aptPkgs = ["...", "libatomic1"]
+nixLibs = ["...", "gcc-unwrapped"]
 cmds = ["npm install -g node-gyp"]
 
 [phases.install]

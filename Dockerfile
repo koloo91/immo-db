@@ -38,6 +38,12 @@ FROM node:22-bookworm-slim AS runner
 
 WORKDIR /app
 
+# Install runtime dependencies needed by native Node addons (e.g. better-sqlite3)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libatomic1 \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=3000
@@ -47,6 +53,7 @@ RUN mkdir -p /app/data /app/storage/uploads
 
 # Copy built application output from builder stage
 COPY --from=builder /app/.output /app/.output
+COPY --from=builder /app/drizzle /app/drizzle
 
 # Expose standard port
 EXPOSE 3000
