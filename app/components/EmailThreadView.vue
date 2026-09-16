@@ -42,22 +42,22 @@
               <a
                 v-if="brokerEmail"
                 :href="mailtoLink(draft)"
-                class="btn btn-xs btn-outline gap-1"
+                class="btn btn-sm btn-outline gap-1"
                 title="Im Mailprogramm öffnen"
               >
                 <Icon name="lucide:external-link" class="w-3 h-3" />
                 Öffnen
               </a>
-              <button class="btn btn-xs btn-ghost gap-1" @click="copyText(draft.bodyText || '')">
+              <button class="btn btn-sm btn-ghost gap-1" @click="copyText(draft.bodyText || '')">
                 <Icon name="lucide:copy" class="w-3 h-3" />
                 Kopieren
               </button>
-              <button class="btn btn-xs btn-success gap-1" :disabled="busyId === draft.id" @click="markAsSent(draft)">
+              <button class="btn btn-sm btn-success gap-1" :disabled="busyId === draft.id" @click="markAsSent(draft)">
                 <span v-if="busyId === draft.id" class="loading loading-spinner loading-xs"></span>
                 <Icon v-else name="lucide:send" class="w-3 h-3" />
                 Als gesendet markieren
               </button>
-              <button class="btn btn-xs btn-ghost btn-circle text-error" @click="remove(draft.id)">
+              <button class="btn btn-sm btn-ghost btn-circle text-error" @click="remove(draft.id)">
                 <Icon name="lucide:trash-2" class="w-3 h-3" />
               </button>
             </div>
@@ -131,7 +131,7 @@
                   </div>
                 </div>
                 <button
-                  class="btn btn-ghost btn-xs btn-circle text-error/60 hover:text-error shrink-0"
+                  class="btn btn-ghost btn-sm btn-circle text-error/60 hover:text-error shrink-0"
                   title="Eintrag löschen"
                   @click="remove(message.id)"
                 >
@@ -177,7 +177,7 @@
                   :href="`/api/properties/${propertyId}/documents/${attachment.id}/file`"
                   target="_blank"
                   rel="noopener"
-                  class="btn btn-xs btn-outline gap-1 normal-case font-normal"
+                  class="btn btn-sm btn-outline gap-1 normal-case font-normal"
                 >
                   <Icon name="lucide:paperclip" class="w-3 h-3" />
                   {{ attachment.fileName }}
@@ -187,7 +187,7 @@
 
               <!-- Nachträglich PDF anhängen -->
               <div>
-                <label class="btn btn-xs btn-ghost gap-1 text-base-content/60">
+                <label class="btn btn-sm btn-ghost gap-1 text-base-content/60">
                   <Icon name="lucide:plus" class="w-3 h-3" />
                   <span>{{ uploadingFor === message.id ? 'Lädt...' : 'PDF an diese Mail hängen' }}</span>
                   <input
@@ -349,7 +349,7 @@
               :key="choice.title"
               class="flex items-center gap-2 text-xs py-0.5 cursor-pointer"
             >
-              <input v-model="choice.apply" type="checkbox" class="checkbox checkbox-xs checkbox-primary" />
+              <input v-model="choice.apply" type="checkbox" class="checkbox checkbox-sm checkbox-primary" />
               <span>{{ choice.title }} &rarr; <strong>{{ statusLabel(choice.status) }}</strong></span>
             </label>
           </div>
@@ -365,7 +365,7 @@
               :key="i"
               class="flex items-center gap-2 text-xs py-1"
             >
-              <input v-model="attachment.keep" type="checkbox" class="checkbox checkbox-xs checkbox-primary" />
+              <input v-model="attachment.keep" type="checkbox" class="checkbox checkbox-sm checkbox-primary" />
               <span class="flex-1 truncate">{{ attachment.fileName }} ({{ (attachment.size / 1024).toFixed(0) }} KB)</span>
               <select v-model="attachment.docType" class="select select-sm select-bordered">
                 <option value="expose">Exposé</option>

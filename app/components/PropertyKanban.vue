@@ -113,7 +113,7 @@
               <div class="pt-2 border-t border-base-200 flex items-center justify-between text-xs" @click.stop>
                 <button 
                   v-if="col.prev"
-                  class="btn btn-ghost btn-xs text-base-content/60 hover:text-base-content"
+                  class="btn btn-ghost btn-sm text-base-content/60 hover:text-base-content"
                   :title="`Verschieben nach '${col.prevTitle}'`"
                   @click.stop="moveProperty(p.id, col.prev)"
                 >
@@ -133,7 +133,7 @@
 
                 <button 
                   v-if="col.next"
-                  class="btn btn-ghost btn-xs text-base-content/60 hover:text-base-content"
+                  class="btn btn-ghost btn-sm text-base-content/60 hover:text-base-content"
                   :title="`Verschieben nach '${col.nextTitle}'`"
                   @click.stop="moveProperty(p.id, col.next)"
                 >

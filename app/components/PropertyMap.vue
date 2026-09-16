@@ -235,7 +235,7 @@ function renderData(L: any) {
               <span class="badge badge-sm">${p.areaSqm ? p.areaSqm + ' m²' : '-'}</span>
             </div>
             <div class="mt-3">
-              <a href="/properties/${p.id}" class="btn btn-xs btn-primary w-full">Dossier öffnen</a>
+              <a href="/properties/${p.id}" class="btn btn-sm btn-primary w-full">Dossier öffnen</a>
             </div>
           </div>
         `)

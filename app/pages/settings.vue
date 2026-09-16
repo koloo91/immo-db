@@ -153,7 +153,7 @@
             </div>
             <div class="bg-base-300 p-3 rounded-xl font-mono text-xs text-base-content flex items-center justify-between overflow-x-auto gap-2">
               <code class="whitespace-nowrap">docker run -d --name=flaresolverr -p 8191:8191 ghcr.io/flaresolverr/flaresolverr:latest</code>
-              <button class="btn btn-xs btn-ghost shrink-0" @click="copyCommand('docker run -d --name=flaresolverr -p 8191:8191 ghcr.io/flaresolverr/flaresolverr:latest')">
+              <button class="btn btn-sm btn-ghost shrink-0" @click="copyCommand('docker run -d --name=flaresolverr -p 8191:8191 ghcr.io/flaresolverr/flaresolverr:latest')">
                 <Icon name="lucide:copy" class="w-3.5 h-3.5" />
               </button>
             </div>
@@ -203,7 +203,7 @@
 
           <div class="bg-base-300 p-3 rounded-xl font-mono text-xs text-base-content flex items-center justify-between">
             <code>/Users/patrick/dev/projects/geobasis-cli/geobasis serve</code>
-            <button class="btn btn-xs btn-ghost" @click="copyCommand('/Users/patrick/dev/projects/geobasis-cli/geobasis serve')">
+            <button class="btn btn-sm btn-ghost" @click="copyCommand('/Users/patrick/dev/projects/geobasis-cli/geobasis serve')">
               <Icon name="lucide:copy" class="w-3.5 h-3.5" />
             </button>
           </div>

@@ -11,7 +11,7 @@
   <div v-else class="space-y-6">
     <!-- Top Nav & Breadcrumbs -->
     <div class="flex items-center justify-between text-xs text-base-content/60">
-      <NuxtLink to="/" class="btn btn-ghost btn-xs gap-1">
+      <NuxtLink to="/" class="btn btn-ghost btn-sm gap-1">
         <Icon name="lucide:arrow-left" class="w-3.5 h-3.5" />
         <span>Zurück zum Portfolio</span>
       </NuxtLink>
@@ -338,7 +338,7 @@
                 </h3>
                 <button 
                   type="button" 
-                  class="btn btn-xs btn-outline btn-primary gap-1"
+                  class="btn btn-sm btn-outline btn-primary gap-1"
                   @click="startEditParcel"
                   title="Katasterdaten und Flurstück bearbeiten oder neu verknüpfen"
                 >
@@ -579,7 +579,7 @@
                   :href="`/api/properties/${property.id}/documents/${doc.id}/file`" 
                   target="_blank" 
                   rel="noopener" 
-                  class="btn btn-xs btn-outline gap-1"
+                  class="btn btn-sm btn-outline gap-1"
                 >
                   <Icon name="lucide:external-link" class="w-3.5 h-3.5" />
                   PDF ansehen
@@ -588,7 +588,7 @@
                 <!-- Apply Extracted Data Button -->
                 <button 
                   v-if="doc.aiExtractedDataJson"
-                  class="btn btn-xs btn-success gap-1 text-success-content"
+                  class="btn btn-sm btn-success gap-1 text-success-content"
                   title="Werte aus dem PDF (Kaufpreis, Fläche, Baurecht, Makler) direkt in dieses Grundstück übernehmen"
                   @click="applyDocData(doc.id)"
                 >
@@ -598,7 +598,7 @@
 
                 <!-- Re-analyze button -->
                 <button 
-                  class="btn btn-xs gap-1"
+                  class="btn btn-sm gap-1"
                   :class="doc.analysisStatus === 'error' ? 'btn-warning' : 'btn-ghost'"
                   :disabled="reanalyzingId === doc.id || doc.analysisStatus === 'running' || doc.analysisStatus === 'skipped'"
                   @click="reanalyzeDoc(doc.id)"
@@ -610,7 +610,7 @@
 
                 <!-- Delete Document -->
                 <button 
-                  class="btn btn-xs btn-ghost btn-circle text-error"
+                  class="btn btn-sm btn-ghost btn-circle text-error"
                   title="Dokument löschen"
                   @click="deleteDoc(doc.id)"
                 >
@@ -875,7 +875,7 @@
                   <span v-if="res.properties?.flaeche">({{ res.properties.flaeche }} m²)</span>
                 </div>
               </div>
-              <button type="button" class="btn btn-xs btn-primary shrink-0">Übernehmen</button>
+              <button type="button" class="btn btn-sm btn-primary shrink-0">Übernehmen</button>
             </div>
           </div>
 

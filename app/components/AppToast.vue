@@ -26,7 +26,7 @@
 
         <button 
           type="button" 
-          class="btn btn-ghost btn-xs btn-circle text-white/80 hover:text-white hover:bg-white/20 ml-1 shrink-0"
+          class="btn btn-ghost btn-sm btn-circle text-white/80 hover:text-white hover:bg-white/20 ml-1 shrink-0"
           @click.stop="remove(t.id)"
         >
           <Icon name="lucide:x" class="w-3.5 h-3.5" />

@@ -31,7 +31,7 @@
           <button 
             v-for="(sug, idx) in suggestions" 
             :key="idx" 
-            class="btn btn-xs btn-outline rounded-full font-normal"
+            class="btn btn-sm btn-outline rounded-full font-normal"
             @click="sendQuickQuestion(sug)"
           >
             {{ sug }}

@@ -8,7 +8,7 @@
             <Icon name="lucide:user" class="w-4 h-4 text-primary" />
             Makler & Ansprechpartner
           </h3>
-          <button class="btn btn-ghost btn-xs text-primary gap-1" @click="isEditingBroker = !isEditingBroker">
+          <button class="btn btn-ghost btn-sm text-primary gap-1" @click="isEditingBroker = !isEditingBroker">
             <Icon :name="isEditingBroker ? 'lucide:check' : 'lucide:edit-2'" class="w-3.5 h-3.5" />
             <span>{{ isEditingBroker ? 'Fertig' : 'Bearbeiten' }}</span>
           </button>
@@ -111,7 +111,7 @@
               <Icon name="lucide:mail" class="w-4 h-4" />
               KI-Entwurf: E-Mail an Makler für fehlende Unterlagen
             </span>
-            <button class="btn btn-ghost btn-xs btn-circle" @click="emailDraft = ''">
+            <button class="btn btn-ghost btn-sm btn-circle" @click="emailDraft = ''">
               <Icon name="lucide:x" class="w-3.5 h-3.5" />
             </button>
           </div>
@@ -128,11 +128,11 @@
               </template>
             </span>
             <div class="flex gap-2">
-              <button class="btn btn-xs btn-outline" @click="copyDraft">
+              <button class="btn btn-sm btn-outline" @click="copyDraft">
                 <Icon name="lucide:copy" class="w-3.5 h-3.5" />
                 {{ copiedDraft ? 'Kopiert!' : 'Kopieren' }}
               </button>
-              <button class="btn btn-xs btn-primary" @click="saveDraftAsTimeline">
+              <button class="btn btn-sm btn-primary" @click="saveDraftAsTimeline">
                 Als Entwurf ablegen
               </button>
             </div>
@@ -163,21 +163,21 @@
             <!-- Status Buttons -->
             <div class="flex items-center gap-1 self-end sm:self-center">
               <button 
-                class="btn btn-xs"
+                class="btn btn-sm"
                 :class="item.status === 'received' ? 'btn-success text-success-content' : 'btn-ghost text-base-content/60'"
                 @click="updateItemStatus(item, 'received')"
               >
                 Erhalten
               </button>
               <button 
-                class="btn btn-xs"
+                class="btn btn-sm"
                 :class="item.status === 'requested' ? 'btn-warning text-warning-content' : 'btn-ghost text-base-content/60'"
                 @click="updateItemStatus(item, 'requested')"
               >
                 Angefordert
               </button>
               <button 
-                class="btn btn-xs"
+                class="btn btn-sm"
                 :class="item.status === 'missing' ? 'btn-error text-error-content' : 'btn-ghost text-base-content/60'"
                 @click="updateItemStatus(item, 'missing')"
               >
@@ -301,7 +301,7 @@
                 </span>
               </div>
               <button 
-                class="btn btn-ghost btn-xs btn-circle text-error/60 hover:text-error"
+                class="btn btn-ghost btn-sm btn-circle text-error/60 hover:text-error"
                 title="Löschen"
                 @click="deleteCommunication(comm.id)"
               >

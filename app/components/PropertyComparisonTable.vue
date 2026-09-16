@@ -207,7 +207,7 @@
 
             <!-- Actions -->
             <td class="text-right" @click.stop>
-              <NuxtLink :to="`/properties/${p.id}`" class="btn btn-ghost btn-xs text-primary">
+              <NuxtLink :to="`/properties/${p.id}`" class="btn btn-ghost btn-sm text-primary">
                 Dossier
                 <Icon name="lucide:arrow-right" class="w-3.5 h-3.5" />
               </NuxtLink>

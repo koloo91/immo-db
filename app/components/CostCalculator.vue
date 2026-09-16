@@ -26,7 +26,7 @@
       <div class="flex flex-wrap gap-1.5">
         <button 
           type="button"
-          class="btn btn-xs rounded-lg transition-all"
+          class="btn btn-sm rounded-lg transition-all"
           :class="isCommissionFree ? 'btn-primary' : 'btn-outline border-base-300 hover:bg-base-200'"
           @click="applyPreset(true)"
         >
@@ -35,7 +35,7 @@
         </button>
         <button 
           type="button"
-          class="btn btn-xs rounded-lg transition-all"
+          class="btn btn-sm rounded-lg transition-all"
           :class="!isCommissionFree && Math.abs(brokerPercent - 3.57) < 0.05 ? 'btn-primary' : 'btn-outline border-base-300 hover:bg-base-200'"
           @click="applyPreset(false)"
         >
@@ -44,7 +44,7 @@
         </button>
         <button 
           type="button"
-          class="btn btn-xs btn-ghost text-base-content/60 ml-auto"
+          class="btn btn-sm btn-ghost text-base-content/60 ml-auto"
           title="Auf Standardwerte zurücksetzen"
           @click="resetDefaults"
         >
@@ -145,7 +145,7 @@
               <label class="flex items-center gap-1.5 cursor-pointer select-none text-xs text-base-content/60">
                 <input 
                   type="checkbox" 
-                  class="checkbox checkbox-xs checkbox-primary" 
+                  class="checkbox checkbox-sm checkbox-primary" 
                   :checked="isCommissionFree" 
                   @change="toggleCommissionFree" 
                 />

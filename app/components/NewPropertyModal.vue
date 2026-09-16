@@ -173,7 +173,7 @@
                 {{ res.subtitle || res.properties?.flstkennz || res.category || '' }}
               </div>
             </div>
-            <button class="btn btn-xs btn-primary btn-outline">
+            <button class="btn btn-sm btn-primary btn-outline">
               Übernehmen
             </button>
           </div>

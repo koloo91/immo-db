@@ -117,7 +117,7 @@
                 <Icon name="lucide:help-circle" class="w-3.5 h-3.5" />
                 Offene Fragen an den Makler ({{ openQuestions.length }})
               </div>
-              <button class="btn btn-xs btn-ghost gap-1" @click="copyQuestions">
+              <button class="btn btn-sm btn-ghost gap-1" @click="copyQuestions">
                 <Icon name="lucide:copy" class="w-3 h-3" />
                 Kopieren
               </button>
