@@ -925,23 +925,28 @@
             </button>
           </div>
 
-          <div v-if="parcelSearchResults.length > 0" class="max-h-52 overflow-y-auto space-y-2 border border-base-200 rounded-lg p-2 bg-base-200/30">
+          <div v-if="parcelSearchResults.length > 0" class="max-h-60 overflow-y-auto space-y-2 border border-base-200 rounded-lg p-2 bg-base-200/30">
             <div 
               v-for="res in parcelSearchResults" 
-              :key="res.id || res.properties?.idflurst || Math.random()"
-              class="p-2.5 bg-base-100 rounded-lg border border-base-300 hover:border-primary cursor-pointer transition-all flex items-center justify-between group"
-              @click="selectParcelSearchResult(res)"
+              :key="res.id"
+              class="p-2.5 bg-base-100 rounded-lg border border-base-300 hover:border-primary cursor-pointer transition-all flex items-center justify-between gap-2"
+              @click="isParcel(res) ? selectParcelSearchResult(res) : verfeinereSuche(res)"
             >
-              <div class="text-xs space-y-0.5 min-w-0 pr-2">
-                <div class="font-semibold text-primary truncate">
-                  {{ res.title || res.text || res.name || res.properties?.lagebeztxt || 'Flurstück' }}
+              <div class="text-xs space-y-0.5 min-w-0">
+                <div class="font-semibold truncate flex items-center gap-1.5">
+                  <span class="badge badge-sm shrink-0" :class="isParcel(res) ? 'badge-primary' : 'badge-ghost'">
+                    {{ TYPE_LABELS[resultType(res)] }}
+                  </span>
+                  <span class="truncate">{{ res.title }}</span>
                 </div>
-                <div class="text-base-content/60 font-mono text-xs truncate">
-                  {{ res.subtitle || res.properties?.flstkennz || res.category || '' }}
-                  <span v-if="res.properties?.flaeche">({{ res.properties.flaeche }} m²)</span>
+                <div class="text-base-content/60 truncate">
+                  {{ resultSubtitle(res) || '—' }}
+                  <span v-if="isAmbiguous(res)" class="badge badge-sm badge-warning ml-1">mehrdeutig</span>
                 </div>
               </div>
-              <button type="button" class="btn btn-sm btn-primary shrink-0">Übernehmen</button>
+              <button type="button" class="btn btn-sm shrink-0" :class="isParcel(res) ? 'btn-primary' : 'btn-ghost'">
+                {{ isParcel(res) ? 'Übernehmen' : 'Eingrenzen' }}
+              </button>
             </div>
           </div>
 
@@ -1438,47 +1443,44 @@ async function searchParcels() {
 }
 
 async function selectParcelSearchResult(res: any) {
-  const p = res.properties || res
-  const kennz = p.flstkennz || res.id || ''
-  if (kennz) {
-    parcelForm.flstkennz = kennz
-  }
-  if (p.flaeche) {
-    parcelForm.officialArea = Number(p.flaeche)
-  }
-  if (p.gemarkung || p.gemarkung_name) {
-    parcelForm.gemarkungName = p.gemarkung || p.gemarkung_name
-  }
-  if (p.flur) {
-    parcelForm.flur = Number(p.flur)
-  }
-  if (p.flstnrzae || p.zaehler) {
-    parcelForm.zaehler = Number(p.flstnrzae || p.zaehler)
-  }
-  if (p.flstnrnen || p.nenner) {
-    parcelForm.nenner = Number(p.flstnrnen || p.nenner)
-  }
+  const kennz = parcelKey(res)
+  if (!kennz) return
 
-  // Fetch price / BORIS info & geometry if available
-  if (kennz) {
-    try {
-      const priceRes = await $fetch<any>(`/api/geobasis/flurstueck/${encodeURIComponent(kennz)}/preise`)
-      if (priceRes?.currentPrice?.bodenrichtwert) {
-        parcelForm.borisBodenrichtwert = priceRes.currentPrice.bodenrichtwert
-      }
-      if (priceRes?.history) {
-        parcelForm.priceHistoryJson = priceRes.history
-      }
-    } catch {}
-    try {
-      const details = await $fetch<any>(`/api/geobasis/flurstueck/${encodeURIComponent(kennz)}`)
-      if (details?.geometry) {
-        parcelForm.geojsonGeometry = details.geometry
-      }
-    } catch {}
-  }
+  loadingParcelSearch.value = true
+  try {
+    // Werte aus der Detailabfrage übernehmen - der Suchtreffer enthält sie nicht.
+    const d = await loadParcelDetails(kennz)
+    parcelForm.flstkennz = d.flstkennz
+    parcelForm.gemarkungName = d.gemarkungName || ''
+    parcelForm.gemarkungSchluessel = d.gemarkungSchluessel || ''
+    parcelForm.flur = d.flur ?? null
+    parcelForm.zaehler = d.zaehler ?? null
+    parcelForm.nenner = d.nenner ?? null
+    parcelForm.officialArea = d.officialArea ?? null
+    if (d.geojsonGeometry) parcelForm.geojsonGeometry = d.geojsonGeometry
+    if (d.borisBodenrichtwert) parcelForm.borisBodenrichtwert = d.borisBodenrichtwert
+    if (d.borisStichtag) parcelForm.borisStichtag = d.borisStichtag
+    if (d.priceHistory) parcelForm.priceHistoryJson = d.priceHistory
 
-  parcelMode.value = 'manual'
+    parcelMode.value = 'manual'
+    toast.success(`Flurstück ${d.zaehler ?? ''} in ${d.gemarkungName ?? ''} übernommen.`)
+  } catch (err: any) {
+    toast.error('Flurstücksdaten konnten nicht geladen werden: ' + (err.data?.statusMessage || err.message))
+  } finally {
+    loadingParcelSearch.value = false
+  }
+}
+
+/**
+ * Gemarkung oder Flur angeklickt: das ist kein Flurstück, sondern eine Eingrenzung.
+ * Der Name wandert ins Suchfeld, damit man "Kummersdorf 591" daraus machen kann.
+ */
+function verfeinereSuche(res: any) {
+  const name = String(res.title || '').replace(/^(Gemarkung|Flur)\s+/, '').replace(/\s*\(\d+\)\s*$/, '')
+  parcelSearchQuery.value = name + ' '
+  parcelSearchResults.value = []
+  parcelSearchSearched.value = false
+  toast.info('Ergänze die Flurstücksnummer, z. B. "' + name + ' 591".')
 }
 
 async function saveParcel() {

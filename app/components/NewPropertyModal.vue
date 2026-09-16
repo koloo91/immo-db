@@ -165,10 +165,14 @@
             class="p-2.5 bg-base-100 rounded-lg border border-base-300 hover:border-primary cursor-pointer transition-all flex items-center justify-between"
             @click="selectGeobasisResult(res)"
           >
-            <div class="text-xs space-y-0.5">
-              <div class="font-semibold text-primary">
-                {{ res.title || res.text || res.name || res.properties?.lagebeztxt || 'Flurstück' }}
+            <div class="text-xs space-y-0.5 min-w-0">
+              <div class="font-semibold flex items-center gap-1.5 truncate">
+                <span class="badge badge-sm shrink-0" :class="isParcel(res) ? 'badge-primary' : 'badge-ghost'">
+                  {{ TYPE_LABELS[resultType(res)] }}
+                </span>
+                <span class="truncate">{{ res.title }}</span>
               </div>
+              <div class="text-base-content/60 truncate">{{ resultSubtitle(res) || '—' }}</div>
               <div class="text-base-content/60">
                 {{ res.subtitle || res.properties?.flstkennz || res.category || '' }}
               </div>
@@ -440,23 +444,45 @@ async function searchGeobasis() {
 }
 
 async function selectGeobasisResult(res: any) {
-  const p = res.properties || res
-  form.title = res.title || res.text || p.lagebeztxt || `Flurstück ${p.flstkennz || geoQuery.value}`
-  form.address = p.lagebeztxt || res.text || res.title || ''
-  
-  if (p.flaeche) {
-    form.areaSqm = Number(p.flaeche)
+  if (!isParcel(res)) {
+    // Gemarkung oder Flur ist kein Flurstück - als Eingrenzung ins Suchfeld übernehmen.
+    const name = String(res.title || '').replace(/^(Gemarkung|Flur)\s+/, '').replace(/\s*\(\d+\)\s*$/, '')
+    geoQuery.value = name + ' '
+    searchResults.value = []
+    geoError.value = `„${name}" ist eine ${TYPE_LABELS[resultType(res)]}. Ergänze die Flurstücksnummer, z. B. „${name} 591".`
+    return
   }
 
-  const kennz = p.flstkennz || res.id
-  if (kennz) {
-    form.flstkennz = kennz
-    try {
-      const priceRes = await $fetch<any>(`/api/geobasis/flurstueck/${encodeURIComponent(kennz)}/preise`)
-      if (priceRes?.currentPrice?.bodenrichtwert) {
-        form.borisBodenrichtwert = priceRes.currentPrice.bodenrichtwert
-      }
-    } catch {}
+  const kennz = parcelKey(res)!
+  loadingGeo.value = true
+  geoError.value = ''
+  try {
+    const d = await loadParcelDetails(kennz)
+
+    // Titel und Adresse aus der amtlichen Lagebezeichnung, nicht aus dem Trefferstring:
+    // der lautete bei Gemarkungstreffern "Gemarkung Kummersdorf (121444)".
+    const ort = [d.gemeinde, d.kreis].filter(Boolean).join(', ')
+    if (!form.title) {
+      form.title = d.lagebezeichnung
+        ? `${d.lagebezeichnung}, ${d.gemeinde || ''}`.replace(/,\s*$/, '')
+        : `Flurstück ${d.zaehler ?? ''} in ${d.gemarkungName ?? ''}`.trim()
+    }
+    if (!form.address && d.lagebezeichnung) {
+      form.address = [d.lagebezeichnung, ort].filter(Boolean).join(', ')
+    }
+    if (d.officialArea) form.areaSqm = d.officialArea
+
+    form.flstkennz = d.flstkennz
+    if (d.gemarkungName) form.gemarkungName = d.gemarkungName
+    if (d.flur !== null && d.flur !== undefined) form.flur = d.flur
+    if (d.zaehler !== null && d.zaehler !== undefined) form.zaehler = d.zaehler
+    if (d.borisBodenrichtwert) form.borisBodenrichtwert = d.borisBodenrichtwert
+
+    searchResults.value = []
+  } catch (err: any) {
+    geoError.value = 'Flurstücksdaten konnten nicht geladen werden: ' + (err.data?.statusMessage || err.message)
+  } finally {
+    loadingGeo.value = false
   }
 }
 
