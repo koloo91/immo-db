@@ -3,14 +3,6 @@
   "packages": {
     "node": "26"
   },
-  "steps": {
-    "install": {
-      "commands": ["bun install"]
-    },
-    "build": {
-      "commands": ["bun build"]
-    }
-  },
   "deploy": {
     "startCommand": "bunx drizzle-kit migrate && &&node .output/server/index.mjs"
   }
